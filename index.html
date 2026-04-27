@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parkour Step Converter</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .card {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #f5f5f5;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .result {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Step Converter</h1>
+
+  <div class="card">
+    <h3>測った人</h3>
+    <label>靴サイズ (cm)</label>
+    <input id="measuredSize" type="number" step="0.1" value="25">
+
+    <label>歩数</label>
+    <input id="measuredSteps" type="number" step="0.1" value="10.8">
+  </div>
+
+  <div class="card">
+    <h3>換算したい人</h3>
+    <label>靴サイズ (cm)</label>
+    <input id="targetSize" type="number" step="0.1" value="27">
+  </div>
+
+  <button onclick="calculate()">計算する</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function calculate() {
+      const measuredSize = parseFloat(document.getElementById("measuredSize").value);
+      const measuredSteps = parseFloat(document.getElementById("measuredSteps").value);
+      const targetSize = parseFloat(document.getElementById("targetSize").value);
+
+      if (!measuredSize || !measuredSteps || !targetSize) {
+        alert("すべて入力してください");
+        return;
+      }
+
+      const distance = measuredSize * measuredSteps;
+      const convertedSteps = distance / targetSize;
+
+      // 0.5歩丸め
+      const rounded = Math.round(convertedSteps * 2) / 2;
+
+      document.getElementById("result").innerHTML = `
+        距離：約 ${distance.toFixed(1)} cm<br>
+        あなたの場合：約 ${convertedSteps.toFixed(2)} 歩<br>
+        （実用値：${rounded} 歩）
+      `;
+    }
+  </script>
+
+</body>
+</html>
